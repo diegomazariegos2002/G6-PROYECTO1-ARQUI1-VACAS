@@ -11,13 +11,18 @@ class IndexRouter {
     config() {
         this.router.get("/", indexController_1.indexController.prueba);
         this.router.get("/verParqueo", indexController_1.indexController.verParqueo);
+        this.router.post("/setParqueo", indexController_1.indexController.setParqueo);
         this.router.get("/estado", indexController_1.indexController.estadoParqueo);
         this.router.get("/existencia", indexController_1.indexController.hayExistencias);
         this.router.post("/reservar", indexController_1.indexController.reservarParqueo);
-        this.router.post("/alarmaReserva", indexController_1.indexController.alarmaReserva);
-        this.router.post("/ocuparParqueo", indexController_1.indexController.ocuparParqueo);
-        this.router.post("/liberarParqueo", indexController_1.indexController.liberarParqueo);
+        this.router.post("/desahbilitarAlarmaReserva", indexController_1.indexController.DeshabilitarAlarmaReserva);
+        this.router.post("/sonidoAlarmaReserva", indexController_1.indexController.SonidoAlarmaReserva);
+        this.router.post("/habilitarAlarmaAntiRobo", indexController_1.indexController.HabilitarAlarmaAntiRobo);
+        this.router.post("/deshabilitarAlarmaAntiRobo", indexController_1.indexController.DeshabilitarAlarmaAntiRobo);
+        this.router.post("/sonidoAlarmaAntirobo", indexController_1.indexController.SonidoalarmaRobo);
         this.router.post("/login", indexController_1.indexController.login);
+        this.router.post("/ajusteTiempo", indexController_1.indexController.ajusteTiempo);
+        this.router.get("/getAlarmaAntiRobo", indexController_1.indexController.getAlarmaAntiRobo);
     }
 }
 const indexRouter = new IndexRouter();

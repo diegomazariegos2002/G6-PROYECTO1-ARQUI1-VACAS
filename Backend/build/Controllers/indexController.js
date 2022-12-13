@@ -8,8 +8,12 @@ let parqueo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     reservado = 2
 */
 let propietarios = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
-let alarma = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
-let alarmaReserva = [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true];
+//si esta activa o no 
+let activacionAntiRobo = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+let activacionReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+// si esta sonando o no
+let alarmaAntiRobo = false;
+let alarmaReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 let tiempo = 300000;
 let pos = -1;
 let usuarios = [
@@ -39,6 +43,15 @@ class IndexController {
     */
     verParqueo(req, res) {
         res.json({ "parqueo": parqueo });
+    }
+    /*
+        setter de parqueos
+        recibe
+        {"parqueos":[]}
+    */
+    setParqueo(req, res) {
+        parqueo = req.body.parqueos;
+        res.json({ "mensaje": "OK" });
     }
     /*
        retonrna el estado del parqueo en nummeros, no recibe nada
@@ -93,11 +106,13 @@ class IndexController {
                 pos = i;
                 parqueo[i] = 2;
                 propietarios[i] = p;
+                activacionReserva[i] = true;
                 res.json({ "res": "OK" });
                 let retardo = setTimeout(() => {
                     if (parqueo[pos] != 1) {
                         parqueo[pos] = 0;
                         propietarios[pos] = -1;
+                        activacionReserva[pos] = false;
                     }
                 }, tiempo);
             }
@@ -110,97 +125,116 @@ class IndexController {
         }
     }
     /*
-        activa o desactiva la alarma
+        desactiva la alarma
         recibe
         {
             "posicion":int,
             "propietario":string o id
         }
     */
-    alarmaReserva(req, res) {
+    DeshabilitarAlarmaReserva(req, res) {
+        let posicion = req.body.posicion;
+        let propietario = req.body.propietario;
+        if (propietario == propietarios[posicion] && activacionReserva[posicion]) {
+            activacionReserva[posicion] = false;
+            alarmaReserva[posicion] = false;
+            propietarios[posicion] = -1;
+            res.json({ "mensaje": "Alarma de reservacion ajustada con exito" });
+        }
+        else {
+            res.json({ "mensaje": "Solo el propietario puede ajustar su alarma de reservacion" });
+        }
+    }
+    /*
+        desactiva la alarma
+        recibe
+        {
+            "posicion":int,
+            "propietario":string o id
+        }
+    */
+    SonidoAlarmaReserva(req, res) {
+        let posicion = req.body.posicion;
+        let propietario = req.body.propietario;
+        if (propietario == propietarios[posicion] && alarmaReserva[posicion]) {
+            alarmaReserva[posicion] = false;
+            res.json({ "mensaje": "Alarma de reservacion apagada" });
+        }
+        else {
+            res.json({ "mensaje": "Solo el propietario puede apagar su alarma de reservacion" });
+        }
+    }
+    /*
+        desactiva la alarma
+        recibe
+        {
+            "posicion":int,
+            "propietario":string o id
+        }
+    */
+    HabilitarAlarmaAntiRobo(req, res) {
+        let posicion = req.body.posicion;
+        let propietario = req.body.propietario;
+        if (propietario == propietarios[posicion] && !activacionAntiRobo[posicion]) {
+            activacionAntiRobo[posicion] = true;
+            res.json({ "mensaje": "Alarma de antirobo ajustada con exito" });
+        }
+        else {
+            res.json({ "mensaje": "Solo el propietario puede ajustar su alarma de robo" });
+        }
+    }
+    /*
+        desactiva la alarma
+        recibe
+        {
+            "posicion":int,
+            "propietario":string o id
+        }
+    */
+    DeshabilitarAlarmaAntiRobo(req, res) {
+        let posicion = req.body.posicion;
+        let propietario = req.body.propietario;
+        if (propietario == propietarios[posicion] && activacionAntiRobo[posicion]) {
+            activacionAntiRobo[posicion] = false;
+            alarmaAntiRobo = false;
+            propietarios[posicion] = -1;
+            res.json({ "mensaje": "Alarma de antirobo ajustada con exito" });
+        }
+        else {
+            res.json({ "mensaje": "Solo el propietario puede ajustar su alarma de robo" });
+        }
+    }
+    /*
+       desactiva la alarma
+       recibe
+       {
+           "posicion":int,
+           "propietario":string o id
+       }
+   */
+    SonidoalarmaRobo(req, res) {
         let posicion = req.body.posicion;
         let propietario = req.body.propietario;
         if (propietario == propietarios[posicion]) {
-            alarmaReserva[posicion] = false;
-            parqueo[posicion] = 0;
-            res.json({ "mensaje": "Alarma de reservacion desactivada con exito" });
+            alarmaAntiRobo = false;
+            res.json({ "mensaje": "Alarma antirobo ajustada con exito" });
         }
         else {
-            res.json({ "mensaje": "Solo el propietario puede desactivar su alarma de reservacion" });
+            res.json({ "mensaje": "Solo el propietario puede ajustar su alarma antirobo" });
         }
     }
     /*
-        cambia el estado de un parqueo de disponible a ocupado
-        recibe
-        {
-            "index":number,   -> debe ser el index del parqueo, un numero de 0 a 15
-            "propietario":string o id
-        }
-        retorna
-        {
-            "mensaje":string,
-            "alarma":boolean
-        }
-    */
-    ocuparParqueo(req, res) {
-        let i = req.body.index;
-        let p = req.body.propietario;
-        if (parqueo[i] == 1) {
-            res.json({ "mensaje": "El parqueo se encuentra ocupado", "alarma": false });
-        }
-        else if (parqueo[i] == 0) {
-            parqueo[i] = 1;
-            propietarios[i] = p;
-            res.json({ "mensaje": "El parqueo se ocupo satisfactoriamente", "alarma": false });
-        }
-        else {
-            res.json({ "mensaje": "No puede ocupar dicho parqueo", "alarma": true });
-        }
-    }
-    /*
-    cambia estado de parqueo de ocupado a disponible
-    recibe
-    {
-        posicion: int,
-        propietario
-    }
-    retorna
-    {
-        "mensaje":string,
-        "alarma":boolean
-    }
-    */
-    liberarParqueo(req, res) {
-        let i = req.body.posicion;
-        let p = req.body.propietario;
-        if (parqueo[i] == 1) {
-            if (alarma[i]) {
-                res.json({ "mensaje": "error", "alarma": true });
-            }
-            else {
-                parqueo[i] = 0;
-                propietarios[i] = -1;
-                alarma[i] = true;
-                alarmaReserva[i] = true;
-                res.json({ "mensaje": "error", "alarma": false });
-            }
-        }
-        else {
-            res.json({ "mensaje": "error", "alarma": false });
-        }
-    }
-    /*
-    recibe
-    {
-        "usuario":string,
-        "pass":string
-    }
-    retorna
-    {
-        "correcto":boolean,
-        "admin":boolean
-    }
-    */
+       recibe
+       {
+           "usuario":string,
+           "pass":string
+       }
+       retorna
+       {
+           "correcto":boolean,
+           "admin":boolean
+       }
+       */
     login(req, res) {
         let u = req.body.usuario;
         let p = req.body.pass;
@@ -217,5 +251,50 @@ class IndexController {
         }
         res.json({ "correcto": flag, "admin": admin });
     }
+    /*
+        ajusta el tiempo de reservacion
+        recibe
+        {"tiempo":int}
+    */
+    ajusteTiempo(req, res) {
+        tiempo = req.body.tiempo;
+    }
+    /* retorna arreglo actual alarma anti robo */
+    getAlarmaAntiRobo(req, res) {
+        res.json({ "alarma": alarmaAntiRobo });
+    }
+    /*retorna arreglo arreglo antiRobo*/
+    getAlarmaReserva(req, res) {
+        res.json({ "alarmaReserva": alarmaReserva });
+    }
 }
 exports.indexController = new IndexController();
+/*
+        cambia el estado de un parqueo de disponible a ocupado
+        recibe
+            {"index":number}   index-> debe ser el index del parqueo, un numero de 0 a 31
+        retorna
+            {"mensaje":string}
+   
+            public ocuparParqueo(req: Request, res: Response) {
+                let i = req.body.index
+                //ocupado
+                if (parqueo[i] == 1) {
+                    res.json({ "mensaje": "El parqueo se encuentra ocupado", "alarma": false })
+                }
+                // disponible
+                else if (parqueo[i] == 0) {
+                    parqueo[i] = 1
+                    res.json({ "mensaje": "El parqueo se ocupo satisfactoriamente", "alarma": false })
+                }
+                // reservado
+                else {
+                    if (activacionReserva[i]) {
+                        alarmaReserva[i] = true
+                        res.json({ "mensaje": "TENEMOS UN 33-12", "alarma": true })
+                    } else {
+        
+                        res.json({ "mensaje": "OK", "alarma": false })
+                    }
+                }
+            } */ 
