@@ -192,8 +192,9 @@ class IndexController {
         let posicion = req.body.posicion
         let propietario = req.body.propietario
 
-        if (propietario == propietarios[posicion] && !activacionAntiRobo[posicion]) {
+        if (-1 == propietarios[posicion] && !activacionAntiRobo[posicion]) {
             activacionAntiRobo[posicion] = true
+            propietarios[posicion] = propietario
             res.json({ "mensaje": "Alarma de antirobo ajustada con exito" })
         } else {
             res.json({ "mensaje": "Solo el propietario puede ajustar su alarma de robo" })
