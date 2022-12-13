@@ -16,6 +16,7 @@ while True:
         # print(x.text)
 
         # Informacion que se manda al arduino
-        arduino.write(bytes("1,1,2,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1,0,1,0,1,1,0,1,1,1,1,1,1,1,0", 'utf-8'))
+        arduino.write(bytes("a", 'utf-8'))
+        # arduino.write(bytes("1,1,2,1,0,1,1,0,1,1,1,1,1,1,1,0", 'utf-8'))
 
 
