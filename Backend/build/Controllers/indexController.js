@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.indexController = void 0;
-let parqueo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let parqueo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 /*
     disponible = 0
     ocupado = 1
     reservado = 2
 */
-let propietarios = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
-let alarma = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
-let alarmaReserva = [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true];
+let propietarios = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+let alarma = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+let alarmaReserva = [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true];
 let tiempo = 10000;
 let pos = -1;
 let usuarios = [
@@ -52,7 +52,7 @@ class IndexController {
         let disponible = 0;
         let ocupado = 0;
         let reservado = 0;
-        for (let i = 0; i < 16; i++) {
+        for (let i = 0; i < 32; i++) {
             if (parqueo[i] == 0) {
                 disponible += 1;
             }
@@ -84,7 +84,7 @@ class IndexController {
         let p = req.body.propietario;
         if (parqueo[i] == 0) {
             let bandera = true;
-            for (let j = 0; j < 16; j++) {
+            for (let j = 0; j < 32; j++) {
                 if (parqueo[j] == 2 && propietarios[j] == p) {
                     bandera = false;
                 }
