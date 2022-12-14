@@ -152,6 +152,7 @@ class IndexController {
             activacionReserva[posicion] = false
             alarmaReserva[posicion] = false
             propietarios[posicion] = -1
+            parqueo[posicion] = 0
             res.json({ "mensaje": "Alarma de reservacion ajustada con exito" })
         } else {
             res.json({ "mensaje": "Solo el propietario puede ajustar su alarma de reservacion" })
@@ -290,6 +291,16 @@ class IndexController {
     /*retorna arreglo arreglo antiRobo*/
     public getAlarmaReserva(req: Request, res: Response) {
         res.json({ "alarmaReserva": alarmaReserva })
+    }
+
+    /*get activacionAntiRobo*/
+    public getActivacionAntiRobo(req: Request, res: Response) {
+        res.json({ "activacionAntiRobo": activacionAntiRobo })
+    }
+
+    // get activacionReserva
+    public getActivacionReserva(req: Request, res: Response) {
+        res.json({ "activacionReserva": activacionReserva })
     }
 }
 
