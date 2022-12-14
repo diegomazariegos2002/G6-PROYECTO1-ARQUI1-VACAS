@@ -108,11 +108,11 @@ class IndexController {
                 propietarios[i] = p;
                 activacionReserva[i] = true;
                 res.json({ "res": "OK" });
-                let retardo = setTimeout(() => {
-                    if (parqueo[pos] != 1) {
-                        parqueo[pos] = 0;
-                        propietarios[pos] = -1;
-                        activacionReserva[pos] = false;
+                let retardo = setTimeout((po = p) => {
+                    if (parqueo[po] != 1) {
+                        parqueo[po] = 0;
+                        propietarios[po] = -1;
+                        activacionReserva[po] = false;
                     }
                 }, tiempo);
             }
