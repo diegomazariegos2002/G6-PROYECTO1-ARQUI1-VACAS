@@ -120,11 +120,12 @@ class IndexController {
                 propietarios[i] = p
                 activacionReserva[i] = true
                 res.json({ "res": "OK" })
-                let retardo = setTimeout(() => {
-                    if (parqueo[pos] != 1) {
-                        parqueo[pos] = 0;
-                        propietarios[pos] = -1;
-                        activacionReserva[pos] = false
+                let retardo = setTimeout((po=i) => {
+                    if (parqueo[po] != 1) {
+                        console.log("po "+po+" t "+tiempo)
+                        parqueo[po] = 0;
+                        propietarios[po] = -1;
+                        activacionReserva[po] = false
                     }
                 }, tiempo);
             } else {
@@ -281,6 +282,7 @@ class IndexController {
     */
     public ajusteTiempo(req: Request, res: Response) {
         tiempo = req.body.tiempo
+        res.json({"mensaje":"OK"})
     }
 
     /* retorna arreglo actual alarma anti robo */
