@@ -197,7 +197,7 @@ class IndexController {
             propietarios[posicion] = propietario
             res.json({ "mensaje": "Alarma de antirobo ajustada con exito" })
         } else {
-            res.json({ "mensaje": "Solo el propietario puede ajustar su alarma de robo" })
+            res.json({ "mensaje": "El lugar ya tiene registrado un propietario" })
         }
     }
 
@@ -263,11 +263,9 @@ class IndexController {
         let flag = false;
         let admin = false
         for (let i = 0; i < usuarios.length; i++) {
-            if (usuarios[i].usuario == p && usuarios[i].pass == p) {
+            if (usuarios[i].usuario == u && usuarios[i].pass == p) {
                 flag = true
-                if (p == "diegomaza") {
-                    admin = true
-                }
+                admin = true
                 break;
             }
         }
