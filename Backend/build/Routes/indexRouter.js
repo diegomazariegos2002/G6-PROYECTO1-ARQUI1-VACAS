@@ -23,7 +23,7 @@ class IndexRouter {
         this.router.post("/login", indexController_1.indexController.login);
         this.router.post("/ajusteTiempo", indexController_1.indexController.ajusteTiempo);
         this.router.get("/getAlarmaAntiRobo", indexController_1.indexController.getAlarmaAntiRobo);
-        this.router.get("getactivacionAntiRobo", indexController_1.indexController.getActivacionAntiRobo);
+        this.router.get("/getactivacionAntiRobo", indexController_1.indexController.getActivacionAntiRobo);
         this.router.get("/getactivacionReserva", indexController_1.indexController.getActivacionReserva);
     }
 }
