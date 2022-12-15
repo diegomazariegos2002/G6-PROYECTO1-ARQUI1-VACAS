@@ -11,6 +11,7 @@ int alarmaReserva1[] = {false,false,false,false,false,false,false,false,false,fa
 int alarmaReserva2[] = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
 int buzzer = A14;
+int alarmaAnti = A15;
 bool shute1[] = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 bool shute2[] = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
@@ -36,6 +37,7 @@ void setup() {
   }   
 
   pinMode(buzzer,OUTPUT); 
+  pinMode(alarmaAnti,OUTPUT); 
 }
 
 void loop(){
@@ -69,6 +71,26 @@ void loop(){
         digitalWrite(buzzer, LOW);
       }
       
+    }
+  }
+
+  //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //Alarma antirrobos
+  //Si está desocupado (disponible = 0) y la alarma sigue activa (alarma=true) se eniende la alarma
+  for (int i = 0; i < 16; i++){
+    if (disponibilidad[i] == 0  && alarmaReserva1[i] == true){
+      digitalWrite(alarmaAnti, HIGH);
+      break;
+    }else{
+      digitalWrite(alarmaAnti, LOW);
+    }
+  }
+  for (int i = 0; i < 16; i++){
+    if (disponibilidad2[i] == 0  && alarmaReserva2[i] == true){
+      digitalWrite(alarmaAnti, HIGH);
+      break;
+    }else{
+      digitalWrite(alarmaAnti, LOW);
     }
   }
 
