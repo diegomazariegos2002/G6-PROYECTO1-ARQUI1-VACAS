@@ -65,7 +65,7 @@ class IndexController {
         let disponible = 0;
         let ocupado = 0;
         let reservado = 0;
-        for (let i = 0; i < 32; i++) {
+        for (let i = 0; i < 16; i++) {
             if (parqueo[i] == 0) {
                 disponible += 1;
             }
@@ -97,7 +97,7 @@ class IndexController {
         let p = req.body.propietario;
         if (parqueo[i] == 0) {
             let bandera = true;
-            for (let j = 0; j < 32; j++) {
+            for (let j = 0; j < 16; j++) {
                 if (parqueo[j] == 2 && propietarios[j] == p) {
                     bandera = false;
                 }
