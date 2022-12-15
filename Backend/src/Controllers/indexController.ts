@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-let parqueo: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+let parqueo: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 /*
     disponible = 0
@@ -8,13 +8,13 @@ let parqueo: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     reservado = 2
 */
 
-let propietarios = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+let propietarios = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 //si esta activa o no 
-let activacionAntiRobo = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-let activacionReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+let activacionAntiRobo = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+let activacionReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 // si esta sonando o no
 let alarmaAntiRobo = false;
-let alarmaReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+let alarmaReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 let tiempo = 300000
 let pos = -1
 
@@ -42,7 +42,6 @@ let usuarios = [
 
 class IndexController {
     public prueba(req: Request, res: Response) {
-
         res.json({ "funciona": "la api" });
     }
 
@@ -120,9 +119,9 @@ class IndexController {
                 propietarios[i] = p
                 activacionReserva[i] = true
                 res.json({ "res": "OK" })
-                let retardo = setTimeout((po=i) => {
+                let retardo = setTimeout((po = i) => {
                     if (parqueo[po] != 1) {
-                        console.log("po "+po+" t "+tiempo)
+                        console.log("po " + po + " t " + tiempo)
                         parqueo[po] = 0;
                         propietarios[po] = -1;
                         activacionReserva[po] = false
@@ -282,7 +281,7 @@ class IndexController {
     */
     public ajusteTiempo(req: Request, res: Response) {
         tiempo = req.body.tiempo
-        res.json({"mensaje":"OK"})
+        res.json({ "mensaje": "OK" })
     }
 
     /* retorna arreglo actual alarma anti robo */

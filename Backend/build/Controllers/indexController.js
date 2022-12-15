@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.indexController = void 0;
-let parqueo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+let parqueo = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 /*
     disponible = 0
     ocupado = 1
     reservado = 2
 */
-let propietarios = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+let propietarios = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 //si esta activa o no 
-let activacionAntiRobo = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
-let activacionReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+let activacionAntiRobo = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+let activacionReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 // si esta sonando o no
 let alarmaAntiRobo = false;
-let alarmaReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+let alarmaReserva = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 let tiempo = 300000;
 let pos = -1;
 let usuarios = [
