@@ -25,6 +25,7 @@ class IndexRouter {
         this.router.get("/getAlarmaAntiRobo", indexController.getAlarmaAntiRobo)
         this.router.get("/getactivacionAntiRobo", indexController.getActivacionAntiRobo)
         this.router.get("/getactivacionReserva", indexController.getActivacionReserva)
+        this.router.get("/getAlarmaReserva", indexController.getAlarmaReserva)
     }
 }
 
