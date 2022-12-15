@@ -1,7 +1,15 @@
 int luzb1[] = {13,11,9,7,5,3,14,16,20,A12,A0,A2,A4,A6,A8,A10};
 int luzb2[] = {12,10,8,6,4,2,15,17,21,A13,A1,A3,A5,A7,A9,A11};
 
-int pinesBarreras = {};
+// Declaramos la variable para controlar el servo
+const int spr = 100;
+Stepper barreraEntrada(spr, 40, 41, 42, 43);
+Stepper barreraSalida(spr, 44,45,46,47);
+//Variables para bluetooth
+char entradaBluetooth;
+int ledBarreraEntrada = 48;
+int ledBarreraSalida = 49;
+int pinesBarreras = {40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53};
 
 String inputString = "";
 bool valido = false;
@@ -15,6 +23,10 @@ void setup() {
   for (int i = 0; i<16; i++){
     pinMode(luzb1[i],OUTPUT);
     pinMode(luzb2[i],OUTPUT);
+  }
+
+  for(int i=0; i<13; i++){
+      pinMode(pinesBarreras[i], OUTPUT);
   }
 }
 
@@ -32,8 +44,8 @@ void serialEvent(){
 
 
 void loop(){
-  if(Serial.available() > 0){
-    entradaBluetooth = Serial.read();
+  if(Serial2.available() > 0){
+    entradaBluetooth = Serial2.read();
 
     if(entradaBluetooth == 'A'){
       digitalWrite(ledBarreraEntrada, HIGH);
