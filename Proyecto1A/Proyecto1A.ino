@@ -4,6 +4,7 @@ int luzb1[] = {13,11,9,7,5,3,14,16,20,A12,A0,A2,A4,A6,A8,A10};
 int luzb2[] = {12,10,8,6,4,2,15,17,21,A13,A1,A3,A5,A7,A9,A11};
 
 int disponibilidad[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+int robo = 0;
 
 int alarmaReserva1[] = {false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false};
 
@@ -125,6 +126,9 @@ int Parqueos_Ocupados = 0;
         
       }else{
         //Verde
+        if (disponibilidad[i] == 1 and robo == 1){
+
+        }        
         digitalWrite(luzb1[i], LOW);
         digitalWrite(luzb2[i], HIGH);
         disponibilidad[i] = 0;
@@ -176,7 +180,7 @@ int Parqueos_Ocupados = 0;
   
   String ret = Serial1.readString();
 
-  String strs[20];
+  String strs[32];
   int StringCount = 0;
 
   while (ret.length() > 0){
@@ -190,9 +194,19 @@ int Parqueos_Ocupados = 0;
     }
   }
   
-  for (int i = 0; i < 16; i++){
-     disponibilidad[i] = strs[i].toInt();
+  for (int i = 0; i < 32; i++){
+    if (i < 16){
+      disponibilidad[i] = strs[i].toInt();
+    }else{
+      if (strs[i].toInt() == 1){
+        alarmaReserva1[i-15] = true;
+      }else{
+        alarmaReserva1[i-15] = false;
+      }
+    }  
   }
+
+  robo = disponibilidad[16];
   
   delay(500);
   //-------------------------------LCD LOOP-------------------------
