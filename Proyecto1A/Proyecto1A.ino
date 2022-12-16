@@ -163,10 +163,11 @@ int Parqueos_Ocupados = 0;
   }
 
   String reporte = "";
-  for (int i = 0; i<16; i++){
+  for (int i = 0; i<15; i++){
     reporte.concat(disponibilidad[i]);
     reporte.concat(",");
   }  
+  reporte.concat(disponibilidad[15]);
   Serial1.print(reporte);
   
   delay(100);

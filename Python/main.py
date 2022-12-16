@@ -46,7 +46,7 @@ while True:
             cadena = ""
             c = 0
             for i in li:
-                if c < 31:
+                if c < 15:
                     cadena = cadena + str(li[c]) + ","
                 else:
                     cadena = cadena + str(li[c])
